@@ -76,5 +76,5 @@ unicodecsv==0.14.1
 urllib3==1.25.7
 Werkzeug==0.16.0
 WTForms==2.2.1
+xlrd==1.2.0
 zipp==0.6.0
-

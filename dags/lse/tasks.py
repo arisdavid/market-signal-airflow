@@ -29,8 +29,10 @@ def download_stock_universe():
     source_url = 'https://www.londonstockexchange.com/statistics/companies-and-issuers/instruments-defined-by-mifir-identifiers-list-on-lse.xlsx'
     sheet_name = '1.1 Shares'
     universe_df = StockUniverse.universe_from_excel(source_url, sheet_name, 7)
+    # Remove column spaces
+    universe_df.columns = universe_df.columns.str.replace(' ', '')
 
-    return "Done"
+    return universe_df.to_dict(orient='records')
 
 
 

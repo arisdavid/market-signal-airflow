@@ -22,14 +22,14 @@ default_args = {
 }
 
 # 3. Instantiate a DAG
-dag = DAG('tutorial',
+dag = DAG('qis_dag',
           default_args=default_args,
           # Continue to run DAG once per day
           schedule_interval=datetime.timedelta(days=1))
 
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = PythonOperator(
-    task_id = 'download_stock',
+    task_id = 'download_stock_universe',
     python_callable=download_stock_universe,
     dag=dag
 )
