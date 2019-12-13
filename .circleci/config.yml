@@ -43,6 +43,12 @@ jobs:
             . venv/bin/activate
             python -m pytest --cov-report html --cov=dags/tests/
 
+      run:
+        name: run pep8 check
+        command: |
+            python -m flake8 dags/ --count --select=E901,E999,F821,F822,F823 --show-source --statistics
+            python -m pylint dags/
+
       - store_artifacts:
           path: test-reports
           destination: test-reports
