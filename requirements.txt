@@ -2,6 +2,7 @@ alembic==1.3.1
 apache-airflow==1.10.6
 apispec==3.1.0
 argcomplete==1.10.3
+astroid==2.3.3
 atomicwrites==1.3.0
 attrs==19.3.0
 Babel==2.7.0
@@ -37,6 +38,7 @@ gunicorn==19.10.0
 idna==2.8
 importlib-metadata==1.3.0
 iso8601==0.1.12
+isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.10.3
 json-merge-patch==0.2
@@ -64,6 +66,7 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 Pygments==2.5.2
 PyJWT==1.7.1
+pylint==2.4.4
 pyparsing==2.4.5
 pyrsistent==0.15.6
 pytest==5.3.1
@@ -84,11 +87,13 @@ tenacity==4.12.0
 termcolor==1.1.0
 text-unidecode==1.2
 thrift==0.13.0
+typed-ast==1.4.0
 tzlocal==1.5.1
 unicodecsv==0.14.1
 urllib3==1.25.7
 wcwidth==0.1.7
 Werkzeug==0.16.0
+wrapt==1.11.2
 WTForms==2.2.1
 xlrd==1.2.0
 zipp==0.6.0
