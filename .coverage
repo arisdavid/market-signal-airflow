@@ -1,1 +1,1 @@
-!coverage.py: This is a private format, don't read it directly!{"lines":{"D:\\Projects\\tutorials\\market-signal-airflow\\tests\\test_lse.py":[1,2]}}
+!coverage.py: This is a private format, don't read it directly!{"lines":{"D:\\Projects\\tutorials\\market-signal-airflow\\dags\\tests\\__init__.py":[1],"D:\\Projects\\tutorials\\market-signal-airflow\\dags\\tests\\conftest.py":[1,2,5,8],"D:\\Projects\\tutorials\\market-signal-airflow\\dags\\tests\\test_lse.py":[3,5]}}
