@@ -12,6 +12,7 @@ Click==7.0
 colorama==0.4.3
 colorlog==4.0.2
 configparser==3.5.3
+coverage==4.5.4
 croniter==0.3.30
 defusedxml==0.6.0
 dill==0.3.1.1
@@ -61,6 +62,7 @@ PyJWT==1.7.1
 pyparsing==2.4.5
 pyrsistent==0.15.6
 pytest==5.3.1
+pytest-cov==2.8.1
 python-daemon==2.1.2
 python-dateutil==2.8.1
 python-editor==1.0.4
