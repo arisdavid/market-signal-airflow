@@ -24,4 +24,4 @@ All information found on this software, including any ideas, opinions, views, pr
 
 
 ##
-![gethurricaneloss](img/airflowdb.png?raw=true)
+![airflow-dashboard](img/airflowdb.PNG?raw=true)
