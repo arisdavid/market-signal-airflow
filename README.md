@@ -21,3 +21,7 @@ Ensure docker for desktop is installed
 
 ## Disclaimer:
 All information found on this software, including any ideas, opinions, views, predictions, forecasts, commentaries or suggestions expressed or implied herein, are for informational and educational purposes only and should not be construed as personal investment advice.
+
+
+##
+![gethurricaneloss](img/airflowdb.png?raw=true)
