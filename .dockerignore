@@ -3,3 +3,4 @@ venv/
 README.md
 docker-compose.yml
 Dockerfile
+artifacts/

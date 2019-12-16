@@ -23,5 +23,7 @@ Ensure docker for desktop is installed
 All information found on this software, including any ideas, opinions, views, predictions, forecasts, commentaries or suggestions expressed or implied herein, are for informational and educational purposes only and should not be construed as personal investment advice.
 
 
-##
-![airflow-dashboard](img/airflowdb.PNG?raw=true)
+## Screenshots
+![airflow-dashboard](img/airflow_workflow.PNG?raw=true)
+
+![airflow-pickles](img/pickles.PNG?raw=true)

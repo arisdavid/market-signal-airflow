@@ -1,41 +1,37 @@
 import datetime
 import airflow
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
-from lse.tasks import download_stock_universe
+from us_markets.tasks import (get_us_tickers, dl_data_and_pickle)
+
+from folder_manager.tasks import create_folder
 
 default_args = {
     'owner': 'Airflow',
-    'start_date': airflow.utils.dates.days_ago(2)
+    'start_date': airflow.utils.dates.days_ago(2),
+    'schedule_interval': '@daily',
 }
 
-with DAG(dag_id='qis_dag', default_args=default_args, schedule_interval=datetime.timedelta(days=1)) as dag:
-
-    t1 = PythonOperator(
-        task_id = 'download_stock_universe',
-        python_callable=download_stock_universe,
+with DAG(dag_id='qis_dag', default_args=default_args) as dag:
+    create_folder = PythonOperator(
+        task_id='create_folders',
+        python_callable=create_folder,
+        op_kwargs={'data_store': 'artifacts'}
     )
 
-    t2 = BashOperator(
-        task_id='sleep',
-        depends_on_past=False,
-        bash_command='sleep 5',
+    dl_us_tickers = PythonOperator(
+        task_id='download_us_tickers',
+        python_callable=get_us_tickers,
+        op_kwargs={'data_store': 'artifacts'}
     )
 
-    templated_command = """
-    {% for i in range(5) %}
-        echo "{{ ds }}"
-        echo "{{ macros.ds_add(ds, 7)}}"
-        echo "{{ params.my_param }}"
-    {% endfor %}
-    """
-
-    t3 = BashOperator(
-        task_id='templated',
-        depends_on_past=False,
-        bash_command=templated_command,
-        params={'my_param': 'Parameter I passed in'},
+    dl_and_pickle_us_stocks = PythonOperator(
+        task_id='download_us_historical_data',
+        python_callable=dl_data_and_pickle,
+        op_kwargs={'data_store': 'artifacts',
+                   'start_date':'2000-01-01',
+                   'end_date': datetime.datetime.today().strftime("%Y-%m-%d")
+                   }
     )
 
-    t1 >> [t2, t3]
+    create_folder >> dl_us_tickers >> dl_and_pickle_us_stocks
