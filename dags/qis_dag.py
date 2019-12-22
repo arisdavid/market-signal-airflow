@@ -4,12 +4,16 @@ from airflow import DAG
 import os
 from pathlib import Path
 from airflow.operators.python_operator import PythonOperator
-from us_markets.tasks import (get_us_tickers, dl_data_and_pickle)
-from common.folder_manager import create_folder
+from us_markets.tasks import (get_us_tickers,
+                              dl_data_and_pickle)
+from common import (folder_manager,
+                     calculator)
+
+
 
 default_args = {
     'owner': 'ArisDavid',
-    'start_date': airflow.utils.dates.days_ago(1),
+    'start_date': airflow.utils.dates.days_ago(2),
     'schedule_interval': '@daily',
 
 }
@@ -17,10 +21,12 @@ default_args = {
 with DAG(dag_id='qis_dag', default_args=default_args, params={
     'data_store': os.path.join(Path(__file__).parent.parent, 'artifacts')
 }) as dag:
-    create_folder = PythonOperator(
+
+    create_folders = PythonOperator(
         task_id='create_folders',
-        python_callable=create_folder,
-        op_kwargs={'data_store':'{{params.data_store}}'}
+        python_callable=folder_manager.create_folder,
+        op_kwargs={'data_store': '{{params.data_store}}',
+                   'sub_folders': ['raw_data', 'processed_data']}
     )
 
     dl_us_tickers = PythonOperator(
@@ -38,4 +44,10 @@ with DAG(dag_id='qis_dag', default_args=default_args, params={
                    }
     )
 
-    create_folder >> dl_us_tickers >> dl_and_pickle_us_stocks
+    create_quotes_table = PythonOperator(
+        task_id='create_quotes_table',
+        python_callable=calculator.create_quotes_table,
+        op_kwargs={'data_store': '{{params.data_store}}'}
+    )
+
+    create_folders >> dl_us_tickers >> dl_and_pickle_us_stocks >> create_quotes_table

@@ -33,8 +33,10 @@ def dl_data_and_pickle(data_store, start_date, end_date):
 
     for ticker in tickers_df['Symbol'].tolist():
         try:
+
             hist_data_df = dl_hist_data(ticker, start_date, end_date)
-            hist_data_df.to_pickle(f'{data_store}/{ticker}.pkl')
+            hist_data_df.to_pickle(f'{data_store}/raw_data/{ticker}.pkl')
+
         except Exception as err:
             print(err)
             continue
