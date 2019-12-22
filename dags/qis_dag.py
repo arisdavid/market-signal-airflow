@@ -10,10 +10,9 @@ from common import (folder_manager,
                      calculator)
 
 
-
 default_args = {
-    'owner': 'ArisDavid',
-    'start_date': airflow.utils.dates.days_ago(2),
+    'owner': 'arisdavid',
+    'start_date': airflow.utils.dates.days_ago(1),
     'schedule_interval': '@daily',
 
 }
