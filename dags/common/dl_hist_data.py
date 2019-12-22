@@ -14,14 +14,16 @@ def dl_hist_data(ticker, start_date, end_date=today):
     """
 
     try:
-
+        print(f'Downloading {ticker}')
         data = yf.download(ticker, start=start_date, end=end_date)
         data["Ticker"] = ticker
+        print(f'{ticker} done')
 
         return data
 
     except Exception as e:
         print(e)
+        print(f'{ticker} failed')
 
 
 

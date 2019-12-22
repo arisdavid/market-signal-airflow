@@ -14,14 +14,8 @@ services:
       - "5432:5432"
 
   webserver:
-    image: puckel/docker-airflow
     container_name: airflow_server
-    build:
-      context: https://github.com/puckel/docker-airflow.git
-      dockerfile: Dockerfile
-      args:
-        AIRFLOW_DEPS: gcp_api,s3
-        PYTHON_DEPS: sqlalchemy==1.3.11
+    build: .
     restart: always
     depends_on:
       - postgres
@@ -29,13 +23,11 @@ services:
       - LOAD_EX=n
       - EXECUTOR=Local
       - FERNET_KEY=jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
-    volumes:
-      - ./dags:/usr/local/airflow/dags
     ports:
       - "8080:8080"
     command: webserver
     healthcheck:
-      test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+      test: ["CMD-SHELL", "[ -f /usr/airflow/src/airflow-webserver.pid ]"]
       interval: 30s
       timeout: 30s
       retries: 3
