@@ -36,7 +36,7 @@ def create_quotes_table(data_store):
 
     quotes_df = pd.DataFrame(stats_table)
 
-    yield quotes_df
+    # yield quotes_df
 
     # Store in DataStore
     quotes_df.to_pickle(f'{data_store}/processed_data/quotes_df.pkl')
@@ -53,5 +53,7 @@ def second_day_play(data_store):
     """
 
     pass
+
+
 
 

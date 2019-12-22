@@ -26,4 +26,3 @@ def dl_hist_data(ticker, start_date, end_date=today):
         print(f'{ticker} failed')
 
 
-
