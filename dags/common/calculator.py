@@ -1,10 +1,11 @@
 import pandas as pd
 import os
+from scipy.stats import kurtosis, skew
 
 
 def create_quotes_table(data_store):
 
-    # | Ticker | Price | PctChange | Volume | Average_Volume | Last Trading Date |
+    # | Ticker | Price | PctChange | Volume | Average_Volume | Last Trading Date | 1Sigma
     tickers = [ticker.replace(".pkl", "") for ticker in os.listdir(f"{data_store}/raw_data")]
 
     stats_table = []
@@ -17,7 +18,7 @@ def create_quotes_table(data_store):
             df['Return'] = df['Adj Close'].pct_change()
             last_date = df.index[-1]
             last_volume = float(df.at[last_date, 'Volume'])
-            mean_volume = float(df['Volume'].tail(20).mean()) #TODO: Last n Volume
+            mean_volume = float(df['Volume'].tail(20).mean())
 
             stats_table.append({
 
@@ -27,7 +28,10 @@ def create_quotes_table(data_store):
                 'Volume': last_volume,
                 'Average_Volume': mean_volume,
                 'RVOL': last_volume / mean_volume,
-                'Trade_Date': df.index[-1]
+                'Trade_Date': df.index[-1],
+                'Kurtosis': kurtosis(df['Return'], nan_policy='omit'),
+                'Skewness': skew(df['Return'], nan_policy='omit'),
+                'Pocket_Pivot': 0
             })
 
         except Exception as err:
@@ -41,19 +45,28 @@ def create_quotes_table(data_store):
     # Store in DataStore
     quotes_df.to_pickle(f'{data_store}/processed_data/quotes_df.pkl')
 
+"""
+from pathlib import Path
+data_store = os.path.join(Path(__file__).parent.parent.parent, 'artifacts')
+df = pd.read_pickle(f'{data_store}/processed_data/quotes_df.pkl')
+cols = ['Volume']
+df[cols] = df[df[cols] > 1000000][cols]
+df.dropna(inplace=True)
 
-def second_day_play(data_store):
+cols = ['Price']
+df[cols] = df[df[cols] < 20][cols]
+df.dropna(inplace=True)
 
-    """
-    Second Day Play Scanner
-    Criteria: Liquid over 1M in volume
-              Relative Volume 3
-              stock price above the 75% quantile of its range
-    :return:
-    """
+cols = ['Pct_Change']
+df[cols] = df[df[cols] > 0.05][cols]
+df.dropna(inplace=True)
 
-    pass
+cols = ['RVOL']
+df[cols] = df[df[cols] > 2][cols]
+df.dropna(inplace=True)
 
+df.sort_values(by='RVOL', ascending=False, inplace=True)
 
+x = 0
 
-
+"""

@@ -25,6 +25,8 @@ services:
       - FERNET_KEY=jsDPRErfv8Z_eVTnGfF8ywd19j4pyqE3NpdUBA_oRTo=
     ports:
       - "8080:8080"
+    volumes:
+      - './artifacts:/usr/local/airflow/artifacts'
     command: webserver
     healthcheck:
       test: ["CMD-SHELL", "[ -f /usr/airflow/src/airflow-webserver.pid ]"]
